@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DES Encryption</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+</head>
+<body>
+
+<h2>DES Encryption and Decryption</h2>
+
+<label for="inputText">Enter Text:</label>
+<input type="text" id="inputText" placeholder="Type your text here">
+
+<button onclick="encrypt()">Encrypt</button>
+<button onclick="decrypt()">Decrypt</button>
+
+<p id="result"></p>
+
+<script>
+  function encrypt() {
+    var inputText = document.getElementById('inputText').value;
+    var key = CryptoJS.enc.Utf8.parse('1234567890123456'); // 16 bytes key
+    var data = CryptoJS.enc.Utf8.parse(inputText);
+
+    var encrypted = CryptoJS.DES.encrypt(data, key, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7
+    });
+
+    document.getElementById('result').innerText = 'Encrypted: ' + encrypted.toString();
+  }
+
+  function decrypt() {
+    var encryptedText = document.getElementById('inputText').value;
+    var key = CryptoJS.enc.Utf8.parse('1234567890123456'); // 16 bytes key
+
+    var decrypted = CryptoJS.DES.decrypt(encryptedText, key, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7
+    });
+
+    document.getElementById('result').innerText = 'Decrypted: ' + decrypted.toString(CryptoJS.enc.Utf8);
+  }
+</script>
+
+</body>
+</html>
